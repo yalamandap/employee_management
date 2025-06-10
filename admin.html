@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - Employee Management</title>
+
+  <!-- Tailwind CSS & Bootstrap CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Firebase SDKs (compat version for simplicity) -->
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- App Scripts -->
+  <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/admin.js"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Top Navbar -->
+  <nav class="bg-blue-700 text-white flex justify-between items-center px-6 py-3 shadow sticky top-0 z-50">
+    <h1 class="text-2xl font-semibold">Admin Panel</h1>
+    <button id="logoutBtn" class="btn btn-outline-light px-4 py-1 rounded hover:bg-white hover:text-blue-700 transition">
+      Logout
+    </button>
+  </nav>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-white shadow-lg w-64 hidden lg:block flex-shrink-0 border-r border-gray-200 overflow-y-auto">
+      <div class="p-6">
+        <h2 class="text-xl font-bold mb-6 text-gray-800">Navigation</h2>
+        <nav class="flex flex-col space-y-3 text-gray-700" aria-label="Sidebar Navigation">
+          <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition">
+            <i class="fas fa-users"></i> Employees
+          </a>
+          <a href="leaves.html" class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition">
+            <i class="fas fa-calendar-alt"></i> Leave Applications
+          </a>
+          <a href="reports.html" class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition">
+            <i class="fas fa-chart-line"></i> Reports
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-8">
+      <!-- Add / Edit Employee Form -->
+      <section class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 mb-10">
+        <h3 id="formTitle" class="text-2xl font-bold mb-6 text-gray-900">Add New Employee</h3>
+        <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <input type="text" id="empName" placeholder="Name" required class="input-style" />
+          <input type="email" id="empEmail" placeholder="Email" required class="input-style" />
+          <input type="text" id="empPhone" placeholder="Phone" required class="input-style" />
+          <input type="text" id="empDepartment" placeholder="Department" required class="input-style" />
+          <input type="text" id="empDesignation" placeholder="Designation" required class="input-style" />
+          <input type="date" id="empDateOfJoining" placeholder="Date of Joining" required class="input-style" />
+          <div class="md:col-span-3 flex gap-4 justify-end">
+            <button type="submit" class="btn btn-success px-6 py-2 rounded-lg shadow hover:shadow-lg transition" id="submitBtn">Add Employee</button>
+            <button type="button" class="btn btn-secondary px-6 py-2 rounded-lg shadow hover:shadow-lg transition hidden" id="cancelEditBtn">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Employees Table -->
+      <section class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-6">
+        <h3 class="text-2xl font-bold mb-6 text-gray-900">Employees</h3>
+        <div class="overflow-x-auto">
+          <table id="employeesTable" class="min-w-full table-auto border-collapse border border-gray-200 rounded-lg overflow-hidden">
+            <thead class="bg-blue-600 text-white">
+              <tr>
+                <th class="py-3 px-6 text-left">Name</th>
+                <th class="py-3 px-6 text-left">Email</th>
+                <th class="py-3 px-6 text-left">Phone</th>
+                <th class="py-3 px-6 text-left">Department</th>
+                <th class="py-3 px-6 text-left">Designation</th>
+                <th class="py-3 px-6 text-left">Date of Joining</th>
+                <th class="py-3 px-6 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <!-- Employee rows dynamically injected here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="bg-blue-700 text-white text-center py-4 mt-auto shadow-inner">
+    <p class="mb-0">&copy; 2025 Employee Management System | Built with ❤️ by Yalamanda Rao Papana</p>
+  </footer>
+
+  <!-- FontAwesome for icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+
+  <style>
+    /* Custom input styles */
+    .input-style {
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #374151;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 3px;
+      outline-color: transparent;
+      background: #fefefe;
+      box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
+    }
+    .input-style:focus {
+      border-color: #2563eb;
+      outline-color: #2563eb;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
+      background: #fff;
+    }
+
+    /* Table hover effect */
+    #employeesTable tbody tr:hover {
+      background-color: #eff6ff;
+      cursor: pointer;
+    }
+
+    /* Action buttons */
+    .btn-action {
+      padding: 0.3rem 0.7rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      font-weight: 600;
+      user-select: none;
+      transition: background-color 0.25s ease;
+      border: none;
+      color: white;
+    }
+    .btn-action.edit {
+      background-color: #3b82f6;
+    }
+    .btn-action.edit:hover {
+      background-color: #2563eb;
+    }
+    .btn-action.delete {
+      background-color: #ef4444;
+      margin-left: 0.5rem;
+    }
+    .btn-action.delete:hover {
+      background-color: #b91c1c;
+    }
+  </style>
+
+</body>
+</html>
