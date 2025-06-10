@@ -1,6 +1,6 @@
 # Employee Management System
 
-![Project Banner](https://user-images.githubusercontent.com/yourusername/yourproject and modern web application to streamline employee management and leave tracking.*
+![Project Banner] https://employee-crud-operations.netlify.app/ and modern web application to streamline employee management and leave tracking.*
 
 ---
 
