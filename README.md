@@ -1,8 +1,3 @@
-# employee_management
-Certainly! Here's an **awesome, professional, and engaging README** template tailored for your **Employee Management System** project. You can customize it further as needed.
-
----
-
 # Employee Management System
 
 ![Project Banner](https://user-images.githubusercontent.com/yourusername/yourproject and modern web application to streamline employee management and leave tracking.*
@@ -126,8 +121,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For any questions or suggestions, please reach out:
 
 - **Name:** Yalamanda Rao Papana  
-- **Email:** your.email@example.com  
-- **GitHub:** [https://github.com/yourusername](https://github.com/yourusername)
+- **Email:** yalamandap6@gmail.com  
+- **GitHub:** [https://github.com/yalamandap]
 
 ---
 
@@ -135,4 +130,4 @@ For any questions or suggestions, please reach out:
 
 ---
 
-Feel free to copy-paste this into your `README.md` and customize the links, contact info, and images! If you want, I can help you generate badges, GIF demos, or more advanced README features.
+
